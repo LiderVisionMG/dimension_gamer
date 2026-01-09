@@ -11,34 +11,63 @@
 body {
     margin: 0;
     font-family: 'Poppins', sans-serif;
+    background: #0f0f1a;
     color: #fff;
-    background:
-        linear-gradient(rgba(15,15,25,0.9), rgba(15,15,25,0.9)),
-        url("img/fondo.jpg");
-    background-size: cover;
 }
 
 /* HEADER */
 header {
     background:
-        linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
-        url("img/header.png") center / cover no-repeat;
-    height: 50vh;
-    min-height: 280px;
+        linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)),
+        url("img/header.jpg") center / cover no-repeat;
+    height: 45vh;
+    min-height: 260px;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
 }
 
-header h1 {
-    font-size: 2.5em;
-    margin: 0;
+/* NAV */
+nav {
+    background: #12122a;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 12px;
 }
 
-header p {
-    font-size: 1em;
-    opacity: 0.9;
+nav button {
+    background: #1b1b3a;
+    border: none;
+    color: #fff;
+    padding: 8px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+nav button:hover,
+nav button.active {
+    background: #00d4ff;
+    color: #000;
+}
+
+/* SEARCH */
+.search-bar {
+    text-align: center;
+    padding: 15px;
+}
+
+.search-bar input {
+    width: 90%;
+    max-width: 420px;
+    padding: 10px 16px;
+    border-radius: 25px;
+    border: none;
+    outline: none;
+    font-size: 0.9em;
 }
 
 /* CONTENEDOR */
@@ -46,6 +75,16 @@ header p {
     max-width: 1200px;
     margin: auto;
     padding: 40px 20px;
+}
+
+/* HOME */
+#home {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+#home h2 {
+    color: #00eaff;
 }
 
 /* PRODUCTOS */
@@ -60,7 +99,7 @@ header p {
     border-radius: 12px;
     padding: 15px;
     text-align: center;
-    box-shadow: 0 0 15px rgba(0, 170, 255, 0.2);
+    animation: fadeUp 0.5s ease;
 }
 
 .product img {
@@ -68,7 +107,6 @@ header p {
     aspect-ratio: 1 / 1;
     object-fit: cover;
     border-radius: 10px;
-    margin-bottom: 10px;
 }
 
 .product h3 {
@@ -76,29 +114,24 @@ header p {
     margin: 10px 0 5px;
 }
 
-.product p {
-    font-size: 0.85em;
-    opacity: 0.85;
-}
-
 .price {
     color: #7cff00;
     font-weight: bold;
-    margin: 10px 0;
+    margin: 8px 0;
 }
 
-button {
+.product button {
     background: #6a00ff;
     border: none;
     color: white;
-    padding: 10px;
+    padding: 8px;
     width: 100%;
     border-radius: 8px;
     cursor: pointer;
     transition: 0.3s;
 }
 
-button:hover {
+.product button:hover {
     background: #00d4ff;
 }
 
@@ -108,10 +141,6 @@ button:hover {
     background: #151528;
     padding: 20px;
     border-radius: 12px;
-}
-
-.cart h2 {
-    color: #00eaff;
 }
 
 .cart ul {
@@ -125,20 +154,46 @@ button:hover {
     margin-bottom: 6px;
 }
 
-.whatsapp-btn {
-    margin-top: 15px;
+/* WHATSAPP FLOAT */
+.whatsapp-float {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
     background: #25d366;
-    font-size: 1em;
+    color: white;
+    font-size: 28px;
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    box-shadow: 0 0 15px rgba(37,211,102,0.6);
+    z-index: 999;
+    animation: pulse 2s infinite;
 }
 
 /* FOOTER */
 footer {
     background:
         linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)),
-        url("img/footer.png") center / cover no-repeat;
-    padding: 40px 20px;
+        url("img/footer.jpg") center / cover no-repeat;
+    padding: 40px;
     text-align: center;
     font-size: 0.85em;
+}
+
+/* ANIMACIONES */
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(37,211,102,0.7); }
+    70% { box-shadow: 0 0 0 15px rgba(37,211,102,0); }
+    100% { box-shadow: 0 0 0 0 rgba(37,211,102,0); }
 }
 </style>
 </head>
@@ -152,212 +207,231 @@ footer {
     </div>
 </header>
 
+<nav>
+    <button class="active" onclick="showCategory('all', this)">Home</button>
+    <button onclick="showCategory('streaming', this)">🎬 Streaming</button>
+    <button onclick="showCategory('music', this)">🎵 Música</button>
+    <button onclick="showCategory('anime', this)">🎌 Anime</button>
+    <button onclick="showCategory('kids', this)">👶 Infantil</button>
+    <button onclick="showCategory('sports', this)">⚽ Deportes</button>
+    <button onclick="showCategory('docs', this)">📚 Documentales</button>
+</nav>
+
+<div class="search-bar">
+    <input id="searchInput" placeholder="🔍 Buscar plataforma..." onkeyup="searchProducts()">
+</div>
+
 <div class="container">
-    <section class="products">
 
-        <div class="product">
-            <img src="img/platforms/netflix.jpg">
-            <h3>Netflix</h3>
-            <p>Series y películas – 1 mes</p>
-            <div class="price">$20.000 COP</div>
-            <button onclick="addToCart('Netflix - 1 Mes')">Agregar</button>
-        </div>
+<section id="home">
+    <h2>Bienvenido a Dimensión Gamer</h2>
+    <p>Selecciona tus plataformas y finaliza tu compra por WhatsApp.</p>
+</section>
 
-        <div class="product">
-            <img src="img/platforms/spotify-premium.jpg">
-            <h3>Spotify Premium</h3>
-            <p>Series y películas – 1 mes</p>
-            <div class="price">$20.000 COP</div>
-            <button onclick="addToCart('Spotify Premium - 1 Mes')">Agregar</button>
-        </div>
+<section class="products">
 
-        <div class="product">
-            <img src="img/platforms/disney-plus.jpg">
-            <h3>Disney Plus</h3>
-            <p>Series y películas – 1 mes</p>
-            <div class="price">$20.000 COP</div>
-            <button onclick="addToCart('Disney Plus - 1 Mes')">Agregar</button>
-        </div>
+<div class="product streaming">
+<img src="img/platforms/netflix.jpg">
+<h3>Netflix</h3>
+<div class="price">$20.000 COP</div>
+<button onclick="addToCart('Netflix - 1 Mes')">Agregar</button>
+</div>
 
-        <div class="product">
-            <img src="img/platforms/crunchyroll.jpg">
-            <h3>Crunchyroll</h3>
-            <p>Series y películas – 1 mes</p>
-            <div class="price">$20.000 COP</div>
-            <button onclick="addToCart('Crunchyroll - 1 Mes')">Agregar</button>
-        </div>
+<div class="product music">
+<img src="img/platforms/spotify-premium.jpg">
+<h3>Spotify Premium</h3>
+<div class="price">$12.000 COP</div>
+<button onclick="addToCart('Spotify Premium - 1 Mes')">Agregar</button>
+</div>
 
-        <div class="product">
-            <img src="img/platforms/hbo-max.jpg">
-            <h3>HBO Max</h3>
-            <p>Series y películas – 1 mes</p>
-            <div class="price">$20.000 COP</div>
-            <button onclick="addToCart('HBO Max - 1 Mes')">Agregar</button>
-        </div>
+<div class="product anime">
+<img src="img/platforms/crunchyroll.jpg">
+<h3>Crunchyroll</h3>
+<div class="price">$10.000 COP</div>
+<button onclick="addToCart('Crunchyroll - 1 Mes')">Agregar</button>
+</div>
 
-        <div class="product">
-            <img src="img/platforms/mubi.jpg">
-            <h3>MUBI</h3>
-            <p>Series y películas – 1 mes</p>
-            <div class="price">$20.000 COP</div>
-            <button onclick="addToCart('MUBI - 1 Mes')">Agregar</button>
-        </div>
+<div class="product sports">
+<img src="img/platforms/mls.jpg">
+<h3>MLS Season Pass</h3>
+<div class="price">$35.000 COP</div>
+<button onclick="addToCart('MLS Season Pass - 1 Mes')">Agregar</button>
+</div>
 
-        <div class="product">
-            <img src="img/platforms/rtve-play.jpg">
-            <h3>RTVE Play</h3>
-            <p>Series y películas – 1 mes</p>
-            <div class="price">$20.000 COP</div>
-            <button onclick="addToCart('RTVE Play - 1 Mes')">Agregar</button>
-        </div>
+<div class="product streaming">
+<img src="img/platforms/disney-plus.jpg">
+<h3>Disney Plus</h3>
+<div class="price">$35.000 COP</div>
+<button onclick="addToCart('Disney Plus - 1 Mes')">Agregar</button>
+</div>
 
-        <div class="product">
-            <img src="img/platforms/rakuten-viki.jpg">
-            <h3>Rakuten Viki</h3>
-            <p>Series y películas – 1 mes</p>
-            <div class="price">$20.000 COP</div>
-            <button onclick="addToCart('Rakuten Viki - 1 Mes')">Agregar</button>
-        </div>
+<div class="product streaming">
+<img src="img/platforms/hbo-max.jpg">
+<h3>HBO Max</h3>
+<div class="price">$35.000 COP</div>
+<button onclick="addToCart('HBO Max - 1 Mes')">Agregar</button>
+</div>
 
-        <div class="product">
-            <img src="img/platforms/iqiyi.jpg">
-            <h3>IQIYI</h3>
-            <p>Series y películas – 1 mes</p>
-            <div class="price">$20.000 COP</div>
-            <button onclick="addToCart('IQIYI - 1 Mes')">Agregar</button>
-        </div>
+<div class="product docs">
+<img src="img/platforms/mubi.jpg">
+<h3>MLS Season Pass</h3>
+<div class="price">$35.000 COP</div>
+<button onclick="addToCart('MLS Season Pass')">Agregar</button>
+</div>
 
-        <div class="product">
-            <img src="img/platforms/kocowa.jpg">
-            <h3>KOCOWA</h3>
-            <p>Series y películas – 1 mes</p>
-            <div class="price">$20.000 COP</div>
-            <button onclick="addToCart('KOCOWA - 1 Mes')">Agregar</button>
-        </div>
+<div class="product streaming">
+<img src="img/platforms/rtve-play.jpg">
+<h3>RTVE Play</h3>
+<div class="price">$35.000 COP</div>
+<button onclick="addToCart('RTVE Play - 1 Mes')">Agregar</button>
+</div>
 
-        <div class="product">
-            <img src="img/platforms/apple-tv.jpg">
-            <h3>Apple TV</h3>
-            <p>Series y películas – 1 mes</p>
-            <div class="price">$20.000 COP</div>
-            <button onclick="addToCart('Apple TV - 1 Mes')">Agregar</button>
-        </div>
+<div class="product streaming">
+<img src="img/platforms/rakuten-viki.jpg">
+<h3>Rakuten Viki</h3>
+<div class="price">$35.000 COP</div>
+<button onclick="addToCart('Rakuten Viki - 1 Mes')">Agregar</button>
+</div>
 
-        <div class="product">
-            <img src="img/platforms/universal-plus.jpg">
-            <h3>Universal Plus</h3>
-            <p>Series y películas – 1 mes</p>
-            <div class="price">$20.000 COP</div>
-            <button onclick="addToCart('Universal Plus - 1 Mes')">Agregar</button>
-        </div>
+<div class="product streaming">
+<img src="img/platforms/iqiyi.jpg">
+<h3>IQIYI</h3>
+<div class="price">$35.000 COP</div>
+<button onclick="addToCart('IQIYI - 1 Mes')">Agregar</button>
+</div>
 
-        <div class="product">
-            <img src="img/platforms/curiosity-stream.jpg">
-            <h3>Curiosity Stream</h3>
-            <p>Series y películas – 1 mes</p>
-            <div class="price">$20.000 COP</div>
-            <button onclick="addToCart('Curiosity Stream - 1 Mes')">Agregar</button>
-        </div>
+<div class="product streaming">
+<img src="img/platforms/kocowa.jpg">
+<h3>KOCOWA</h3>
+<div class="price">$35.000 COP</div>
+<button onclick="addToCart('KOCOWA - 1 Mes')">Agregar</button>
+</div>
 
-        <div class="product">
-            <img src="img/platforms/prime-video.jpg">
-            <h3>Netflix</h3>
-            <p>Series y películas – 1 mes</p>
-            <div class="price">$20.000 COP</div>
-            <button onclick="addToCart('Netflix')">Agregar</button>
-        </div>
+<div class="product streaming">
+<img src="img/platforms/apple-tv.jpg">
+<h3>Apple TV</h3>
+<div class="price">$35.000 COP</div>
+<button onclick="addToCart('Apple TV - 1 Mes')">Agregar</button>
+</div>
 
-        <div class="product">
-            <img src="img/platforms/vix-premium.jpg">
-            <h3>Vix Premium</h3>
-            <p>Series y películas – 1 mes</p>
-            <div class="price">$20.000 COP</div>
-            <button onclick="addToCart('Vix Premium - 1 Mes')">Agregar</button>
-        </div>
+<div class="product streaming">
+<img src="img/platforms/universal-plus.jpg">
+<h3>Universal Plus</h3>
+<div class="price">$35.000 COP</div>
+<button onclick="addToCart('MLS Season Pass')">Agregar</button>
+</div>
 
-        <div class="product">
-            <img src="img/platforms/atres-player.jpg">
-            <h3>Atres Player</h3>
-            <p>Series y películas – 1 mes</p>
-            <div class="price">$20.000 COP</div>
-            <button onclick="addToCart('Atres Player - 1 Mes')">Agregar</button>
-        </div>
+<div class="product docs">
+<img src="img/platforms/curiosity-stream.jpg">
+<h3>Curiosity Stream</h3>
+<div class="price">$35.000 COP</div>
+<button onclick="addToCart('Curiosity Stream - 1 Mes')">Agregar</button>
+</div>
 
-        <div class="product">
-            <img src="img/platforms/paramount-plus.jpg">
-            <h3>Paramount Plus</h3>
-            <p>Series y películas – 1 mes</p>
-            <div class="price">$20.000 COP</div>
-            <button onclick="addToCart('Paramount Plus - 1 Mes')">Agregar</button>
-        </div>
+<div class="product streaming">
+<img src="img/platforms/prime-video.jpg">
+<h3>Prime Video</h3>
+<div class="price">$35.000 COP</div>
+<button onclick="addToCart('Prime Video - 1 Mes')">Agregar</button>
+</div>
 
-        <div class="product">
-            <img src="img/platforms/cindie.jpg">
-            <h3>Cindie</h3>
-            <p>Series y películas – 1 mes</p>
-            <div class="price">$20.000 COP</div>
-            <button onclick="addToCart('Cindie - 1 Mes')">Agregar</button>
-        </div>
+<div class="product streaming">
+<img src="img/platforms/vix-premium.jpg">
+<h3>VIX Premium</h3>
+<div class="price">$35.000 COP</div>
+<button onclick="addToCart('VIX Premium - 1 Mes')">Agregar</button>
+</div>
 
-        <div class="product">
-            <img src="img/platforms/edye.jpg">
-            <h3>Edye</h3>
-            <p>Series y películas – 1 mes</p>
-            <div class="price">$20.000 COP</div>
-            <button onclick="addToCart('Edye - 1 Mes')">Agregar</button>
-        </div>
+<div class="product streaming">
+<img src="img/platforms/atres-player.jpg">
+<h3>Atres Player</h3>
+<div class="price">$35.000 COP</div>
+<button onclick="addToCart('Atres Player - 1 Mes')">Agregar</button>
+</div>
 
-        <div class="product">
-            <img src="img/platforms/mls.jpg">
-            <h3>MLS Season Pass</h3>
-            <p>Series y películas – 1 mes</p>
-            <div class="price">$20.000 COP</div>
-            <button onclick="addToCart('MLS Season Pass - 1 Mes')">Agregar</button>
-        </div>
-    </section>
+<div class="product streaming">
+<img src="img/platforms/paramount-plus.jpg">
+<h3>Paramount Plus</h3>
+<div class="price">$35.000 COP</div>
+<button onclick="addToCart('Paramount Plus - 1 Mes')">Agregar</button>
+</div>
 
-    <section class="cart">
-        <h2>🛒 Carrito</h2>
-        <ul id="cartList"></ul>
-        <button class="whatsapp-btn" onclick="sendToWhatsApp()">Finalizar por WhatsApp</button>
-    </section>
+<div class="product docs">
+<img src="img/platforms/cindie.jpg">
+<h3>Cindie</h3>
+<div class="price">$35.000 COP</div>
+<button onclick="addToCart('Cindie - 1 Mes')">Agregar</button>
+</div>
+
+<div class="product kids">
+<img src="img/platforms/edye.jpg">
+<h3>Edye</h3>
+<div class="price">$35.000 COP</div>
+<button onclick="addToCart('Edye - 1 Mes')">Agregar</button>
+</div>
+
+</section>
+
+<section class="cart">
+<h2>🛒 Carrito</h2>
+<ul id="cartList"></ul>
+<button class="product button" onclick="sendToWhatsApp()">Finalizar por WhatsApp</button>
+</section>
+
 </div>
 
 <footer>
-    © 2026 Dimensión Gamer – Ventas vía WhatsApp
+© 2026 Dimensión Gamer – Ventas vía WhatsApp
 </footer>
+
+<a href="https://wa.me/573162581097" class="whatsapp-float" target="_blank">💬</a>
 
 <script>
 let cart = [];
 
-function addToCart(product) {
-    cart.push(product);
+function addToCart(item) {
+    cart.push(item);
     renderCart();
 }
 
 function renderCart() {
     const list = document.getElementById('cartList');
     list.innerHTML = '';
-    cart.forEach((item, i) => {
-        const li = document.createElement('li');
-        li.innerHTML = `${item} <span onclick="removeItem(${i})" style="color:red;cursor:pointer;">✖</span>`;
-        list.appendChild(li);
+    cart.forEach((i, index) => {
+        list.innerHTML += `<li>${i} <span onclick="removeItem(${index})" style="cursor:pointer;color:red;">✖</span></li>`;
     });
 }
 
-function removeItem(index) {
-    cart.splice(index, 1);
+function removeItem(i) {
+    cart.splice(i, 1);
     renderCart();
 }
 
 function sendToWhatsApp() {
-    if (!cart.length) return alert('El carrito está vacío');
+    if (!cart.length) return alert('Carrito vacío');
     let msg = 'Hola 👋 Estoy interesado en:%0A';
-    cart.forEach(i => msg += '- ' + i + '%0A');
+    cart.forEach(p => msg += '- ' + p + '%0A');
     window.open('https://wa.me/573162581097?text=' + msg, '_blank');
+}
+
+function showCategory(cat, btn) {
+    document.getElementById('home').style.display = cat === 'all' ? 'block' : 'none';
+    document.querySelectorAll('.product').forEach(p => {
+        p.style.display = cat === 'all' || p.classList.contains(cat) ? 'block' : 'none';
+    });
+    document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+}
+
+function searchProducts() {
+    const value = document.getElementById('searchInput').value.toLowerCase();
+    document.getElementById('home').style.display = 'none';
+    document.querySelectorAll('.product').forEach(product => {
+        const name = product.querySelector('h3').innerText.toLowerCase();
+        product.style.display = name.includes(value) ? 'block' : 'none';
+    });
 }
 </script>
 
 </body>
 </html>
-
